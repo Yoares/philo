@@ -1,0 +1,4 @@
+NAME = philo
+
+CC = cc
+
