@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:01:43 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/06/29 18:47:20 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/06/29 18:50:08 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ int	parse_args(t_data *data, int ac, char **av)
 	data->time_to_eat = ft_atoi(av[3]);
 	data->time_to_sleep = ft_atoi(av[4]);
 	if (ac == 6)
-	    data->must_eat = ft_atoi(av[5]);
+        data->must_eat = ft_atoi(av[5]);
     else
-	    data->must_eat = -1;
+        data->must_eat = -1;
 	data->someone_died = 0;
     
     if (data->nb_philo <= 0 || data->time_to_die <= 0 ||
-		data->time_to_eat <= 0 || data->time_to_sleep <= 0 ||
+	    data->time_to_eat <= 0 || data->time_to_sleep <= 0 ||
 		(ac == 6 && data->must_eat <= 0))
 		    return (0);
 	return (1);
@@ -46,7 +46,7 @@ int	main(int ac, char **av)
 
 	if (!parse_args(&data, ac, av))
 	{
-		printf("Error: invalid arguments\n");
+        printf("Error: invalid arguments\n");
 		return (1);
 	}
 }
