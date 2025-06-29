@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:55:03 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/06/27 01:26:16 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/06/29 18:40:31 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <pthread.h>
+# include <limits.h>
 # include <sys/time.h>
 
 typedef struct s_data t_data;
@@ -54,7 +55,8 @@ int		init_data(t_data *data);
 // utils.c
 long long	get_time(void);
 void		ft_usleep(long long time);
-int		ft_atoi(const char *str);
+long		ft_atoi(const char *str);
+int			ft_isdigit(int n);
 int		error_msg(char *msg);
 
 // routine.c
