@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:01:43 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/06/30 10:17:22 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/06/30 13:09:00 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	main(int ac, char **av)
 	if (!parse_args(&data, ac, av))
 	{
         printf("Error: invalid arguments\n");
+        if (!init_mutexes(&data))
+		    return (printf("Failed to init mutexes\n"), 1);
 		return (1);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:55:03 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/06/29 18:40:31 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/06/30 13:09:28 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ struct s_data
 
 // main.c
 int		parse_args(t_data *data, int argc, char **argv);
-int		init_data(t_data *data);
+int		init_mutexes(t_data *data);
 
 // utils.c
 long long	get_time(void);
