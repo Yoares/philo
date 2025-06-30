@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:01:43 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/06/29 18:50:08 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/06/30 10:17:22 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	parse_args(t_data *data, int ac, char **av)
     int i = 1;
     if (ac != 5 && ac != 0)
         return (0);
-    while (av[i] < ac)
+    while (i < ac)
     {
-        if (!ft_isdigit(av[i]))
+        if (!ft_isdigit(ft_atoi(av[i])))
             return (0);
         i++;
     }
@@ -27,11 +27,11 @@ int	parse_args(t_data *data, int ac, char **av)
 	data->time_to_die = ft_atoi(av[2]);
 	data->time_to_eat = ft_atoi(av[3]);
 	data->time_to_sleep = ft_atoi(av[4]);
+	data->someone_died = 0;
 	if (ac == 6)
         data->must_eat = ft_atoi(av[5]);
     else
         data->must_eat = -1;
-	data->someone_died = 0;
     
     if (data->nb_philo <= 0 || data->time_to_die <= 0 ||
 	    data->time_to_eat <= 0 || data->time_to_sleep <= 0 ||
