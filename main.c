@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:01:43 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/06/30 13:09:00 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:15:38 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,20 @@
 int	parse_args(t_data *data, int ac, char **av)
 {
     int i = 1;
-    if (ac != 5 && ac != 0)
+    if (ac != 5 && ac != 6)
         return (0);
     while (i < ac)
     {
-        if (!ft_isdigit(ft_atoi(av[i])))
-            return (0);
+		// Check if string contains only digits
+		int j = 0;
+		if (av[i][j] == '+')
+			j++;
+		while (av[i][j])
+		{
+			if (!ft_isdigit(av[i][j]))
+				return (0);
+			j++;
+		}
         i++;
     }
     data->nb_philo = ft_atoi(av[1]);
@@ -45,10 +53,20 @@ int	main(int ac, char **av)
 	t_data	data;
 
 	if (!parse_args(&data, ac, av))
-	{
-        printf("Error: invalid arguments\n");
-        if (!init_mutexes(&data))
-		    return (printf("Failed to init mutexes\n"), 1);
-		return (1);
-	}
+		return (error_msg("invalid arguments"));
+	
+	if (!init_mutexes(&data))
+		return (error_msg("Failed to init mutexes"));
+	
+	if (!init_philosophers(&data))
+		return (error_msg("Failed to init philosophers"));
+	
+	data.start_time = get_time();
+	
+	if (!create_threads(&data))
+		return (error_msg("Failed to create threads"));
+	
+	monitor(&data);
+	cleanup(&data);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:55:03 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/06/30 13:09:28 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:15:39 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,27 @@ struct s_data
 
 // main.c
 int		parse_args(t_data *data, int argc, char **argv);
+
+// init.c
 int		init_mutexes(t_data *data);
+int		init_philosophers(t_data *data);
+int		create_threads(t_data *data);
+void	cleanup(t_data *data);
 
 // utils.c
 long long	get_time(void);
 void		ft_usleep(long long time);
 long		ft_atoi(const char *str);
 int			ft_isdigit(int n);
-int		error_msg(char *msg);
+int			error_msg(char *msg);
+void		print_action(t_philo *philo, char *action);
 
-// routine.c
-void	*philo_routine(void *arg);
+// philo.c
+void		*philo_routine(void *arg);
 
 // monitor.c
-void	monitor(t_data *data);
-
-// cleanup.c
-void	cleanup(t_data *data);
+void		monitor(t_data *data);
+int			check_death(t_data *data);
+int			check_meals_completed(t_data *data);
 
 #endif

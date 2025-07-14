@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:01:46 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/06/30 18:09:07 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:15:38 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,43 @@ int	init_philosophers(t_data *data)
 		i++;
 	}
 	return (1);
+}
+
+int	create_threads(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->nb_philo)
+	{
+		data->philos[i].last_meal = data->start_time;
+		if (pthread_create(&data->philos[i].thread, NULL, 
+			philo_routine, &data->philos[i]) != 0)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	cleanup(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->nb_philo)
+	{
+		pthread_join(data->philos[i].thread, NULL);
+		i++;
+	}
+	
+	i = 0;
+	while (i < data->nb_philo)
+	{
+		pthread_mutex_destroy(&data->forks[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&data->print_lock);
+	
+	free(data->forks);
+	free(data->philos);
 }
