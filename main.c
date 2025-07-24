@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:01:43 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/07/14 13:15:38 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/07/19 19:58:35 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	parse_args(t_data *data, int ac, char **av)
         return (0);
     while (i < ac)
     {
-		// Check if string contains only digits
 		int j = 0;
 		if (av[i][j] == '+')
 			j++;
