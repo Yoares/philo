@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:01:37 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/07/25 17:36:19 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/07/25 19:51:52 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,36 @@
 void	*philo_routine(void *arg)
 {
 	t_philo  *philo;
+   pthread_mutex_t (*first_fork), (*second_fork);
 
    philo = (t_philo *)arg;
+   if (philo->data->nb_philo == 1)  //handel single philo
+   {
+      print_action(philo, "has taken a fork");
+      //it should bee sleep
+      return (NULL);
+   }
+   while (!philo->data->someone_died) // life cycle
+   {
+      print_action(philo, " is thinking");
+      if (philo->left_fork < philo->right_fork) // to avoid deadlock
+      {
+         first_fork = philo->left_fork;
+         second_fork = philo->right_fork;
+      }
+      else
+      {
+         first_fork = philo->right_fork;
+         second_fork = philo->left_fork;
+      }
+      pthread_mutex_lock(first_fork);
+      print_action(philo, "has taken a fork");
+      pthread_mutex_lock(second_fork);
+      print_action(philo, "has taken a fork");
+
+      //eathing
+      print_action(philo, "is eating");
+      philo->last_meal = getime();
+
+   }
 }
