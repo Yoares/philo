@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:01:46 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/07/24 19:56:02 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/07/25 14:27:16 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,21 @@ int	create_threads(t_data *data)
 
 void	cleanup(t_data *data)
 {
-	
+	int	i;
+
+	i = 0;
+	while (i < data->nb_philo)
+	{
+		pthrea_join(data->philos[i].thread, NULL);
+		i++;
+	}
+	i = 0;
+	while(i < data->nb_philo)
+	{
+		pthread_mutex_destroy(&data->forks[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&data->print_lock);
+	free(data->philos);
+	free(data->forks);
 }
