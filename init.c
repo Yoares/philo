@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:01:46 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/07/25 14:27:16 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/07/26 19:03:23 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int	init_mutexes(t_data *data)
 		}
 		i++;
 	}
+	if (pthread_mutex_init(&data->meal_lock, NULL) != 0)
+		return (error_msg("Failed to init meal_lock"));
 	if (init_print_lock(data))
 		return (0);
 	return (1);
@@ -61,7 +63,7 @@ int	init_philosophers(t_data *data)
 {
 	int	i;
 
-	data->philos = malloc((sizeof (int *)) * data->nb_philo);
+	data->philos = malloc(sizeof(t_philo) * data->nb_philo);
 	if (!data->philos)
 		return (0);
 	i = 0;
@@ -80,7 +82,7 @@ int	init_philosophers(t_data *data)
 
 int	create_threads(t_data *data)
 {
-	int	(i), (j);
+	int	i, j;
 
 	i = 0;
 	while(i < data->nb_philo)
@@ -89,7 +91,9 @@ int	create_threads(t_data *data)
 			philo_routine, 
 			&data->philos[i]) != 0)
 		{
+			pthread_mutex_lock(&data->meal_lock);
 			data->someone_died = 1;
+			pthread_mutex_unlock(&data->meal_lock);
 			j = 0;
 			while (j < i)
 			{
@@ -110,7 +114,7 @@ void	cleanup(t_data *data)
 	i = 0;
 	while (i < data->nb_philo)
 	{
-		pthrea_join(data->philos[i].thread, NULL);
+		pthread_join(data->philos[i].thread, NULL);
 		i++;
 	}
 	i = 0;
@@ -120,6 +124,7 @@ void	cleanup(t_data *data)
 		i++;
 	}
 	pthread_mutex_destroy(&data->print_lock);
+	pthread_mutex_destroy(&data->meal_lock);
 	free(data->philos);
 	free(data->forks);
 }

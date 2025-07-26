@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:55:03 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/07/24 18:15:58 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:31:22 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ struct s_data
 
 	pthread_mutex_t *forks;
 	pthread_mutex_t print_lock;
+	pthread_mutex_t meal_lock;
 	t_philo         *philos;
 };
 

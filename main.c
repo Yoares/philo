@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:01:43 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/07/19 19:58:35 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/07/26 19:17:06 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,12 @@ int	main(int ac, char **av)
 	if (!parse_args(&data, ac, av))
 		return (error_msg("invalid arguments"));
 	
+	data.start_time = get_time();
 	if (!init_mutexes(&data))
 		return (error_msg("Failed to init mutexes"));
 	
 	if (!init_philosophers(&data))
 		return (error_msg("Failed to init philosophers"));
-	
-	data.start_time = get_time();
 	
 	if (!create_threads(&data))
 		return (error_msg("Failed to create threads"));
