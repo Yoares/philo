@@ -6,20 +6,20 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:01:43 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/07/27 14:57:41 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/07/27 16:08:36 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	parse_args(t_data *data, int ac, char **av)
+static int	is_valid_args(int ac, char **av)
 {
 	int	i;
 	int	j;
 
-	i = 1;
 	if (ac != 5 && ac != 6)
 		return (0);
+	i = 1;
 	while (i < ac)
 	{
 		j = 0;
@@ -33,6 +33,13 @@ int	parse_args(t_data *data, int ac, char **av)
 		}
 		i++;
 	}
+	return (1);
+}
+
+int	parse_args(t_data *data, int ac, char **av)
+{
+	if (!is_valid_args(ac, av))
+		return (0);
 	data->nb_philo = ft_atoi(av[1]);
 	data->time_to_die = ft_atoi(av[2]);
 	data->time_to_eat = ft_atoi(av[3]);

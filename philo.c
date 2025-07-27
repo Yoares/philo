@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:01:37 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/07/27 15:09:55 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/07/27 16:11:46 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	*philo_routine(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->data->nb_philo == 1)
-		one_philo(philo);
+		return (one_philo(philo));
 	if (philo->id % 2 == 0)
 		ft_usleep(philo->data->time_to_eat / 2);
 	while (!check_death_status(philo))
