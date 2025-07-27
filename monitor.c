@@ -6,38 +6,39 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:01:40 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/07/26 19:17:37 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/07/27 15:00:07 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int check_death(t_data *data)
+int	check_death(t_data *data)
 {
-    long long current_t = get_time();
-    int i;
-	
-	i = 0;
-    while ( i < data->nb_philo)
-    {
-        pthread_mutex_lock(&data->meal_lock);
-        long long last_meal = data->philos[i].last_meal;
-        pthread_mutex_unlock(&data->meal_lock);
+	long long	current_t;
+	long long	last_meal;
+	int			i;
 
-        if ((current_t - last_meal) > data->time_to_die)
-        {
-            pthread_mutex_lock(&data->meal_lock);
-            data->someone_died = 1;
-            pthread_mutex_unlock(&data->meal_lock);
-            
-            pthread_mutex_lock(&data->print_lock);
-            printf("%lld %d died\n", current_t - data->start_time, data->philos[i].id);
-            pthread_mutex_unlock(&data->print_lock);
-            return 1;
-        }
+	i = 0;
+	current_t = get_time();
+	while (i < data->nb_philo)
+	{
+		pthread_mutex_lock(&data->meal_lock);
+		last_meal = data->philos[i].last_meal;
+		pthread_mutex_unlock(&data->meal_lock);
+		if ((current_t - last_meal) > data->time_to_die)
+		{
+			pthread_mutex_lock(&data->meal_lock);
+			data->someone_died = 1;
+			pthread_mutex_unlock(&data->meal_lock);
+			pthread_mutex_lock(&data->print_lock);
+			printf("%lld %d died\n", current_t - data->start_time,
+				data->philos[i].id);
+			pthread_mutex_unlock(&data->print_lock);
+			return (1);
+		}
 		i++;
-    }
-    return 0;
+	}
+	return (0);
 }
 
 int	check_meals_completed(t_data *data)
@@ -47,7 +48,6 @@ int	check_meals_completed(t_data *data)
 
 	if (data->must_eat == -1)
 		return (0);
-	
 	completed_meals = 0;
 	pthread_mutex_lock(&data->meal_lock);
 	i = 0;
@@ -57,7 +57,6 @@ int	check_meals_completed(t_data *data)
 			completed_meals++;
 		i++;
 	}
-	
 	if (completed_meals == data->nb_philo)
 	{
 		data->someone_died = 1;
@@ -76,13 +75,11 @@ void	monitor(t_data *data)
 		if (data->someone_died)
 		{
 			pthread_mutex_unlock(&data->meal_lock);
-			break;
+			break ;
 		}
 		pthread_mutex_unlock(&data->meal_lock);
-		
 		if (check_death(data) || check_meals_completed(data))
-			break;
-		
+			break ;
 		usleep(100);
 	}
 }
