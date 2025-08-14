@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:55:03 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/07/27 15:17:38 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/08/11 20:22:22 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,57 +22,70 @@
 
 typedef struct s_data	t_data;
 
-typedef struct s_philo
-{
-	int				id;
-	int				meals_eaten;
-	long long		last_meal;
-	pthread_t		thread;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
-	t_data			*data;
-}	t_philo;
+typedef struct s_philosopher {
+    int id;                      // Philosopher identifier (0-based)
+    int number_of_meals;         // Meals eaten counter
+    long long last_meal;         // Timestamp of last meal
+    pthread_mutex_t *left_fork;  // Pointer to left fork mutex
+    pthread_mutex_t *right_fork; // Pointer to right fork mutex
+    pthread_mutex_t meal_mutex;  // Protects meal-related data
+    struct s_program *program;   // Back-reference to main program
+} t_philosopher;
 
-typedef struct s_data
-{
-	int				nb_philo;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				must_eat;
-	long long		start_time;
-	int				someone_died;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	print_lock;
-	pthread_mutex_t	meal_lock;
-	t_philo			*philos;
-}	t_data;
+typedef struct s_program {
+    // Program parameters
+    int nb_of_philosophers;
+    int time_to_die, time_to_eat, time_to_sleep;
+    int must_eat_count;          // Optional: minimum meals required
+    
+    // Timing and status
+    long long start_time;
+    int someone_died;
+    
+    // Synchronization primitives
+    pthread_mutex_t death_status; // Protects death flag
+    pthread_mutex_t print;        // Serializes output
+    pthread_mutex_t *forks;       // Array of fork mutexes
+    pthread_mutex_t turn_mutex;   // For odd-numbered cases
+    int current_turn;             // Turn-based system for 3 philosophers
+    
+    // Thread management
+    pthread_t *threads;           // Philosopher threads
+    pthread_t *monitor;           // Death monitor thread
+    t_philosopher *philosophers;  // Philosopher data
+} t_program;
 
-// main.c
-int			parse_args(t_data *data, int argc, char **argv);
+/* time functions */
+long					get_time(void);
+void					ft_usleep(long time_in_ms, t_program *prog);
+int						critical_timing(t_program *prog);
 
-// init.c
-int			init_mutexes(t_data *data);
-int			init_philosophers(t_data *data);
-int			create_threads(t_data *data);
-void		cleanup(t_data *data);
+/* utility functions */
+void					print_status(t_philosopher *philo, char *status);
+int						get_death_status(t_program *prog);
+void					set_death_status(t_philosopher *philo);
+long					get_meal_time(t_philosopher *philo);
+void					set_meal_time(t_philosopher *philo);
+int						ft_strncmp(const char *s1, const char *s2, size_t n);
 
-// utils.c
-long long	get_time(void);
-void		ft_usleep(long long time);
-long		ft_atoi(const char *str);
-int			ft_isdigit(int n);
-int			error_msg(char *msg);
-void		print_action(t_philo *philo, char *action);
+/* initialization functions */
+int						check_args(int ac, char **av);
+int						init_program_args(t_program *program, int ac,
+							char **av);
+void					*monitor_routine(void *arg);
+int						init_program(t_program *program);
+int						init_mutexes(t_program *program);
+void					init_philosophers(t_program *program);
 
-// philo.c
-void		*philo_routine(void *arg);
-int			eat(t_philo *philo);
-int			check_death_status(t_philo *philo);
+/* philosopher actions */
+void					take_forks_3(t_philosopher *philo);
+int						eat(t_philosopher *philo);
+int						eat_3(t_philosopher *philo);
+int						sleep_think_actions(t_philosopher *philo);
+void					*philosopher_routine(void *arg);
+void					*philosopher_routine_3(void *arg);
 
-// monitor.c
-void		monitor(t_data *data);
-int			check_death(t_data *data);
-int			check_meals_completed(t_data *data);
+/* cleanup functions */
+void					clean_program(t_program *program);
 
 #endif

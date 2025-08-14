@@ -6,7 +6,7 @@ CFLAGS = -Wall -Wextra -Werror -pthread
 
 RM = rm -f
 
-SRCS = main.c utils.c philo.c monitor.c init.c eat.c utils_2.c
+SRCS = main.c utils.c philo.c monitor.c init.c eat.c utils_2.c time_functions.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)

@@ -6,6 +6,7 @@
     "editor.semanticHighlighting.enabled": true,
     "files.associations": {
         "*.h": "c",
-        "*.c": "c"
+        "*.c": "c",
+        "iomanip": "c"
     }
 }
