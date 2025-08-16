@@ -6,10 +6,13 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:01:40 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/08/14 15:30:04 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/08/16 23:45:12 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-
+// void    *monitor_routine(void *arg)
+// {
+    
+// }

@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:55:03 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/08/11 20:22:22 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/08/16 23:49:26 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_program {
 } t_program;
 
 /* time functions */
-long					get_time(void);
+long long					get_time(void);
 void					ft_usleep(long time_in_ms, t_program *prog);
 int						critical_timing(t_program *prog);
 
