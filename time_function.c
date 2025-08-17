@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 20:29:26 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/08/16 23:48:22 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/08/17 14:50:20 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,8 @@ void	ft_usleep(long time_in_ms, t_program *prog)
 	long	sleep_interval;
 
 	start = get_time();
-	if (prog->nb_of_philosophers > 100)
-		sleep_interval = 500;
-	else if (prog->nb_of_philosophers > 50)
-		sleep_interval = 100;
-	else
-		sleep_interval = 50;
-	while ((get_time() - start) < time_in_ms)
+	sleep_interval = 50;
+	while ((get_time() - start) < time_in_ms && !prog->someone_died)
 	{
 		usleep(sleep_interval);
 	}
