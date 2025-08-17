@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 15:16:31 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/08/15 17:31:16 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/08/17 13:18:26 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	set_meal_time(t_philosopher *philo)
 {
 	pthread_mutex_lock(&philo->meal_mutex);
 	philo->number_of_meals++;
-	philo->last_meal++;
+	philo->last_meal = get_time();
 	pthread_mutex_unlock(&philo->meal_mutex);
 }
 

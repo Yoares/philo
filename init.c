@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:01:46 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/08/16 23:44:48 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/08/17 13:18:25 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,22 @@ int	init_mutexes(t_program *program)
 		return (1);
 	if (program->nb_of_philosophers % 2 != 0)
 		pthread_mutex_init(&program->turn_mutex, NULL);
-	i = -1;
-	if (pthread_mutex_init(&program->philosophers[i].meal_mutex, NULL)
-		|| pthread_mutex_init(&program->forks[i], NULL))
+	
+	i = 0;
+	while (i < program->nb_of_philosophers)
 	{
-		while (--i >= 0)
+		if (pthread_mutex_init(&program->philosophers[i].meal_mutex, NULL)
+			|| pthread_mutex_init(&program->forks[i], NULL))
 		{
-			pthread_mutex_destroy(&program->forks[i]);
-			pthread_mutex_destroy(&program->philosophers[i].meal_mutex);
+			while (--i >= 0)
+			{
+				pthread_mutex_destroy(&program->forks[i]);
+				pthread_mutex_destroy(&program->philosophers[i].meal_mutex);
+			}
+			return (pthread_mutex_destroy(&program->print),
+					pthread_mutex_destroy(&program->death_status), 1);
 		}
-		return (pthread_mutex_destroy(&program->print),
-				pthread_mutex_destroy(&program->death_status), 1);
+		i++;
 	}
 	return (0);
 }
@@ -71,7 +76,7 @@ int	init_program(t_program *program)
 	program->forks = malloc(sizeof(pthread_mutex_t) * program->nb_of_philosophers);
 	program->threads = malloc(sizeof(pthread_t) * program->nb_of_philosophers);
 	program->monitor = malloc(sizeof(pthread_t));
-	program->philosophers = malloc(sizeof(t_philosopher));
+	program->philosophers = malloc(sizeof(t_philosopher) * program->nb_of_philosophers);
 
 	if (!program->forks || !program->threads || !program->monitor || !program->philosophers)
 	{

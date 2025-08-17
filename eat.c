@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 15:05:05 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/08/16 23:46:29 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/08/17 13:18:28 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,11 @@ int	eat(t_philosopher *philo)
 	{
 		pthread_mutex_unlock(first_fork);
 		pthread_mutex_unlock(second_fork);
+		return (1);
 	}
 	print_status(philo, "is eating");
-	philo->last_meal = get_meal_time(philo);
-	ft_usleep(philo->program->time_to_sleep, philo->program);
+	set_meal_time(philo);
+	ft_usleep(philo->program->time_to_eat, philo->program);
 	pthread_mutex_unlock(first_fork);
 	pthread_mutex_unlock(second_fork);
 	return (0);
