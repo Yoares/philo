@@ -52,17 +52,17 @@ static int	create_threads(t_program *program)
 		pthread_mutex_lock(&program->philosophers[i].meal_mutex);
 		program->philosophers[i].last_meal = get_time();
 		pthread_mutex_unlock(&program->philosophers[i].meal_mutex);
-		if (program->nb_of_philosophers % 2 != 0 && i > 3)
+		if (program->nb_of_philosophers % 2 != 0 && i < 3)
 		{
 			if (pthread_create(&program->threads[i], NULL,
 					philosopher_routine_3, &program->philosophers[i]))
-					return (1);
+				return (1);
 		}
 		else
 		{
 			if (pthread_create(&program->threads[i], NULL,
 					philosopher_routine, &program->philosophers[i]))
-					return (1);
+				return (1);
 		}
 		i++;
 	}
