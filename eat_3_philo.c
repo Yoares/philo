@@ -14,7 +14,6 @@
 
 void	take_forks_3(t_philosopher *philo)
 {
-	
 	if (philo->left_fork < philo->right_fork)
 	{
 		pthread_mutex_lock(philo->left_fork);
@@ -27,7 +26,7 @@ void	take_forks_3(t_philosopher *philo)
 		pthread_mutex_lock(philo->right_fork);
 		print_status(philo, "has taken a fork");
 		pthread_mutex_lock(philo->left_fork);
-		print_status(philo, "has taken a fork");	
+		print_status(philo, "has taken a fork");
 	}
 }
 
@@ -37,7 +36,7 @@ static int	wait_for_turn(t_philosopher *philo)
 	{
 		pthread_mutex_lock(&philo->program->turn_mutex);
 		if (philo->program->current_turn == philo->id)
-			break;
+			break ;
 		else
 			pthread_mutex_unlock(&philo->program->turn_mutex);
 		if (get_death_status(philo->program))

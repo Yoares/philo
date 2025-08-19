@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:01:43 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/08/16 23:49:08 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/08/19 17:42:54 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	handle_one_philo(t_program *prog)
 {
-	long long start_time;
+	long long	start_time;
 
 	prog->start_time = get_time();
 	start_time = get_time() - prog->start_time;

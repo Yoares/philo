@@ -6,7 +6,7 @@
 /*   By: ykhoussi <ykhoussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:01:37 by ykhoussi          #+#    #+#             */
-/*   Updated: 2025/08/17 16:24:27 by ykhoussi         ###   ########.fr       */
+/*   Updated: 2025/08/19 17:50:15 by ykhoussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
 / Special circular arrangement for first 3 philosophers
 */
-static void init_group_of_three(t_program *program)
+static void	init_group_of_three(t_program *program)
 {
 	program->philosophers[0].left_fork = &program->forks[0];
 	program->philosophers[0].right_fork = &program->forks[1];
@@ -25,7 +25,7 @@ static void init_group_of_three(t_program *program)
 	program->philosophers[2].right_fork = &program->forks[0];
 }
 
-static void init_group_of_two(t_program *program, int start)
+static void	init_group_of_two(t_program *program, int start)
 {
 	int	i;
 	int	philo_idx;
@@ -37,7 +37,8 @@ static void init_group_of_two(t_program *program, int start)
 		philo_idx = start + i;
 		other_idx = (start + ((i + 1) % 2));
 		program->philosophers[philo_idx].left_fork = &program->forks[philo_idx];
-		program->philosophers[philo_idx].right_fork = &program->forks[other_idx];
+		program->philosophers[philo_idx].right_fork
+			= &program->forks[other_idx];
 		i++;
 	}
 }
@@ -74,7 +75,6 @@ static void	init_groups(t_program *program)
 			init_group_of_two(program, i);
 			i += 2;
 		}
-		
 	}
 	else
 	{

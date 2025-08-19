@@ -51,7 +51,7 @@ void	print_status(t_philosopher *philo, char *status)
 {
 	long long	current_time;
 
-	if(!ft_strncmp(status, "died", 4))
+	if (!ft_strncmp(status, "died", 4))
 	{
 		pthread_mutex_lock(&philo->program->print);
 		current_time = get_time() - philo->program->start_time;
